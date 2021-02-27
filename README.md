@@ -1,8 +1,8 @@
 # BE-Project
 # Group ID - GA5
 # Members - 
-  Ajinkya Medhekar
-  Kunal Karnik
+  Ajinkya Medhekar\n
+  Kunal Karnik\n
   Manandeep
 
 # Problem Statement -
