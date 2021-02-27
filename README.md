@@ -9,7 +9,7 @@
 >To prevent cyber attacks in Remote Keyless Entry System (RKES) by using time efficient and secure symmetric cryptographic techniques.
 
 # Task List -
-- [**x**] Implement Base Model without rasp pi code
+- [x] Implement Base Model without rasp pi code
 - [ ] Implement Base Model with rasp pi code
 - [ ] Test Base Model with rasp pi code
 - [ ] Perform attacks on Base Model with rasp pi code
