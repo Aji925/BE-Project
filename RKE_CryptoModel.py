@@ -43,10 +43,12 @@ class RKECryptoModel:
         self.msg = message
         self.sk = sk
 
-    def get_bit_msg(self, s):
+    @staticmethod
+    def get_bit_msg(s):
         return ''.join(format(ord(x), 'b').zfill(8) for x in s)
 
-    def get_char_msg(self, bit_msg):
+    @staticmethod
+    def get_char_msg(bit_msg):
         n = len(bit_msg)
         i = 0
         tmp = ''
@@ -100,22 +102,20 @@ if __name__ == "__main__":
     st = 'maskmask'
     secret_key = 'mask'
     print('Plain txt:', st)
+
     msg = ''.join(format(ord(x), 'b').zfill(8) for x in st)
     msg = '00'+msg
+    
     print('\nSingle Encryption on last 64 bits process:')
     print('At Fob Encrypt:')
     fob = RKECryptoModel(msg, secret_key)
-    # encrypt_start_time = time.time()
     fob.single_encrypt()
-    # encryption_time = time.time() - encrypt_start_time
     print('Fob Encrypt Bit:', fob.msg)
     print('Fob Encrypt Char:', fob.get_char_msg(fob.msg[2:]))
 
     print('At Car Decrypt:')
     car = RKECryptoModel(fob.msg, secret_key)
-    # decrypt_start_time = time.time()
     car.single_decrypt()
-    # decryption_time = time.time() - decrypt_start_time
     print('Car Decrypt Bit:', car.msg)
     print('Car Decrypt Char:', car.get_char_msg(car.msg[2:]))
 
