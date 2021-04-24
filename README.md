@@ -17,6 +17,7 @@
 - [ ] **Implement Proposed Model with rasp pi code**
 - [ ] **Test Proposed Model with rasp pi code**
 - [ ] **Perform attacks on Proposed Model with rasp pi code**
+- [ ] **IEEE Report**
 
 # Important points -
 >**RKE_Crypto.py** contains **base model** implementation
