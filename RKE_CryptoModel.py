@@ -103,9 +103,9 @@ if __name__ == "__main__":
     secret_key = 'mask'
     print('Plain txt:', st)
 
-    msg = ''.join(format(ord(x), 'b').zfill(8) for x in st)
+    msg = RKECryptoModel.get_bit_msg(st)
     msg = '00'+msg
-    
+
     print('\nSingle Encryption on last 64 bits process:')
     print('At Fob Encrypt:')
     fob = RKECryptoModel(msg, secret_key)
