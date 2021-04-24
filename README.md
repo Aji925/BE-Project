@@ -10,8 +10,8 @@
 
 # Task List -
 - [x] **Implement Base Model without rasp pi code**
-- [ ] **Implement Base Model with rasp pi code**
-- [ ] **Test Base Model with rasp pi code**
+- [x] **Implement Base Model with rasp pi code**
+- [x] **Test Base Model with rasp pi code**
 - [ ] **Perform attacks on Base Model with rasp pi code**
 - [ ] **Implement Proposed Model without rasp pi code**
 - [ ] **Implement Proposed Model with rasp pi code**
