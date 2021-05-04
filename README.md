@@ -13,11 +13,14 @@
 - [x] **Implement Base Model with rasp pi code**
 - [x] **Test Base Model with rasp pi code**
 - [ ] **Perform attacks on Base Model with rasp pi code**
-- [ ] **Implement Proposed Model without rasp pi code**
-- [ ] **Implement Proposed Model with rasp pi code**
-- [ ] **Test Proposed Model with rasp pi code**
+- [x] **Implement Proposed Model without rasp pi code**
+- [x] **Implement Proposed Model with rasp pi code**
+- [x] **Test Proposed Model with rasp pi code**
 - [ ] **Perform attacks on Proposed Model with rasp pi code**
-- [ ] **IEEE Report**
+- [x] **Implement Proposed Model with rolling codes without rasp pi code**
+- [ ] **Implement Proposed Model with rolling codes with rasp pi code**
+- [ ] **Test Proposed Model with rolling codes with rasp pi code**
+- [ ] **IEEE Paper**
 
 # Important points -
 >**RKE_Crypto.py** contains **base model** implementation
