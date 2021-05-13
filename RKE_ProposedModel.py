@@ -5,46 +5,6 @@ import time
 plaintext = '321manandeep1234'
 sk = 'ajinkya123456789'
 
-'''
-# Rijndael testing
-key = 'ajinkya123456789'
-
-print('Using Rijndael key = ', key, ' block size =', 16)
-
-obj = Rijndael(key, block_size=16)
-
-plaintext = '321manandeep1234'
-
-print('Plain text:', plaintext)
-
-encrypt_text = obj.encrypt(plaintext)
-
-print('Encrypted Text:', encrypt_text)
-
-decrypt_text = obj.decrypt(encrypt_text)
-
-print('Decrypted text:', decrypt_text)
-'''
-
-'''
-# Twofish testing
-key = 'ajinkya123456789'
-
-obj = Twofish(key.encode('utf-8'))
-
-plaintext = '321manandeep1234'
-
-print('Plain text: ', plaintext)
-
-encrypt_text = obj.encrypt(plaintext.encode('utf-8'))
-
-print('Encrypted text: ', encrypt_text)
-
-decrypt_text = obj.decrypt(encrypt_text).decode('utf-8')
-
-print('Decrypted text: ', decrypt_text)
-
-'''
 # Applying rijndael(twofish)
 
 
@@ -54,33 +14,44 @@ class RKE_ProposedModel:
         self.block_size = block_size
 
     def encrypt(self, msg):
-        algo1 = Twofish((self.sk).encode('utf-8'))
-        encrypt_msg1 = algo1.encrypt(msg.encode('utf-8'))
-        print('\nSize of encrypt1:', len(encrypt_msg1))
-
+        e_start_ts = time.time()
         start_timestamp = round(time.time(), 5)
-        print('Start timestamp at encryption:', start_timestamp)
+        print('Start timestamp at encryption:', start_timestamp, 's')
+
+        algo1 = Twofish(self.sk.encode('utf-8'))
+        encrypt_msg1 = algo1.encrypt(msg.encode('utf-8'))
 
         algo2 = Rijndael(self.sk, self.block_size)
         encrypt_msg2 = algo2.encrypt(encrypt_msg1+str(start_timestamp).encode('utf-8'))
-        print('Size of encrypt2:', len(encrypt_msg2))
+
+        print('\nSize of encrypt1:', len(encrypt_msg1), 'bytes')
+        print('Size of encrypt2:', len(encrypt_msg2), 'bytes')
+
+        e_end_ts = time.time()
+        print('Time taken for encrypt():', (e_end_ts - e_start_ts) * 10**3, 'ms')
 
         return encrypt_msg2
 
     def decrypt(self, msg):
+        d_start_ts = time.time()
+        end_timestamp = round(time.time(), 5)
+        print('End timestamp at decryption:', end_timestamp, 's')
+
         algo2 = Rijndael(self.sk, self.block_size)
         decrypt_msg2 = algo2.decrypt(msg)
-        print('\nSize of decrypt2:', len(decrypt_msg2))
 
-        algo1 = Twofish((self.sk).encode('utf-8'))
+        algo1 = Twofish(self.sk.encode('utf-8'))
         decrypt_msg1 = algo1.decrypt(decrypt_msg2[:16])
-        print('Size of decrypt1:', len(decrypt_msg1))
+
+        print('\nSize of decrypt2:', len(decrypt_msg2), 'bytes')
+        print('Size of decrypt1:', len(decrypt_msg1), 'bytes')
 
         start_timestamp = float((decrypt_msg2[16:]).decode('utf-8'))
-        print('Start timestamp extracted at decryption:', start_timestamp)
-        end_timestamp = round(time.time(), 5)
-        print('End timestamp at decryption:', end_timestamp)
+        print('Start timestamp extracted at decryption:', start_timestamp, 's')
         diff_timestamp = end_timestamp-start_timestamp
+
+        d_end_ts = time.time()
+        print('Time taken for decrypt():', (d_end_ts - d_start_ts) * 10**3, 'ms')
 
         return decrypt_msg1.decode('utf-8'), diff_timestamp
 
@@ -100,4 +71,4 @@ if __name__ == '__main__':
     decrypted_msg, diff_timestamp = car.decrypt(encrypted_msg)
 
     print('\nAt car, decrypted msg:', decrypted_msg)
-    print('Difference in Tend - Tstart :', diff_timestamp)
+    print('Difference in Tend - Tstart :', diff_timestamp * 10**3, 'ms')
