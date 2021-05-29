@@ -4,26 +4,33 @@ import time
 import random
 import string
 
-sk = 'ajinkya123456789'
-seed_no = 234
+seed_no = 231
+seed_no1 = 309
+seed_no2 = 321
+possible_chars = string.ascii_letters + string.digits + string.punctuation
 
 # Applying rijndael(twofish)
 
 
 class RKE_ProposedModel:
-    def __init__(self, key, block_size):
-        self.sk = key
-        self.block_size = block_size
+    def __init__(self):
+        self.sk1 = ''
+        self.sk2 = ''
+        self.block_size = 32
 
     def encrypt(self, msg):
         e_start_ts = time.time()
         start_timestamp = round(time.time(), 5)
         print('Start timestamp at encryption:', start_timestamp, 's')
 
-        algo1 = Twofish((self.sk).encode('utf-8'))
+        random.seed(seed_no1)
+        self.sk1 = ''.join(random.choice(possible_chars) for i in range(16))
+        algo1 = Twofish(self.sk1.encode('utf-8'))
         encrypt_msg1 = algo1.encrypt(msg.encode('utf-8'))
 
-        algo2 = Rijndael(self.sk, self.block_size)
+        random.seed(seed_no2)
+        self.sk2 = ''.join(random.choice(possible_chars) for i in range(16))
+        algo2 = Rijndael(self.sk2, self.block_size)
         encrypt_msg2 = algo2.encrypt(encrypt_msg1+str(start_timestamp).encode('utf-8'))
 
         print('Size of encrypt2:', len(encrypt_msg2), 'bytes')
@@ -39,10 +46,14 @@ class RKE_ProposedModel:
         end_timestamp = round(time.time(), 5)
         print('End timestamp at decryption:', end_timestamp, 's')
 
-        algo2 = Rijndael(self.sk, self.block_size)
+        random.seed(seed_no2)
+        self.sk2 = ''.join(random.choice(possible_chars) for i in range(16))
+        algo2 = Rijndael(self.sk2, self.block_size)
         decrypt_msg2 = algo2.decrypt(msg)
 
-        algo1 = Twofish((self.sk).encode('utf-8'))
+        random.seed(seed_no1)
+        self.sk1 = ''.join(random.choice(possible_chars) for i in range(16))
+        algo1 = Twofish(self.sk1.encode('utf-8'))
         decrypt_msg1 = algo1.decrypt(decrypt_msg2[:16])
 
         print('Size of decrypt1:', len(decrypt_msg1), 'bytes')
@@ -61,20 +72,18 @@ class RKE_ProposedModel:
 if __name__ == '__main__':
 
     random.seed(seed_no)
-    plaintext1 = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(16))
-    sk = ''.join(random.choice(string.ascii_letters + string.digits + string.punctuation) for i in range(16))
+    plaintext1 = ''.join(random.choice(possible_chars) for i in range(16))
 
     print('\nPlain text:', plaintext1)
-    print('SK:', sk)
-    print('Number of possible values for a letter in sk:', len(string.ascii_letters + string.digits + string.punctuation))
+    print('Number of possible values for a letter in both sk:', len(possible_chars))
 
-    fob = RKE_ProposedModel(sk, block_size=32)
+    fob = RKE_ProposedModel()
 
     encrypted_msg = fob.encrypt(plaintext1)
 
     print('\nAt fob, encrypted msg:', encrypted_msg)
 
-    car = RKE_ProposedModel(sk, block_size=32)
+    car = RKE_ProposedModel()
 
     decrypted_msg, diff_timestamp = car.decrypt(encrypted_msg)
 
@@ -82,6 +91,6 @@ if __name__ == '__main__':
     print('Difference in Tend - Tstart :', diff_timestamp * 10**3, 'ms')
 
     random.seed(seed_no)
-    plaintext2 = ''.join(random.choice(string.ascii_lowercase + string.digits) for i in range(16))
+    plaintext2 = ''.join(random.choice(possible_chars) for i in range(16))
 
     print('Plain text at car:', plaintext2)
