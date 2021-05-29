@@ -20,7 +20,7 @@
 - [x] **Implement Proposed Model with rolling codes without rasp pi code**
 - [x] **Implement Proposed Model with rolling codes with rasp pi code**
 - [x] **Test Proposed Model with rolling codes with rasp pi code**
-- [ ] **IEEE Paper**
+- [x] **IEEE Paper**
 
 # Important points -
 > 1. **RKE_Crypto.py** contains **base model** implementation
